@@ -30,9 +30,9 @@ function selectedStats(c){
 }
 function render(){
  const vc=visibleCountries(),ga=maxS(vc.map(anchor));
- document.getElementById('subtitle').textContent=`数据截至 ${ga} · 日花费含 2% 税 · Supabase 共享数据`;
+ document.getElementById('subtitle').textContent=`数据截至 ${ga} · 日花费含 2% 税`;
  const src=state.meta?.lastImportName||state.sourceFile||'内置数据';
- document.getElementById('notice').textContent=selectedCountry==='ALL'?`共享数据源：${src}。登录账号读取同一份 Supabase 数据；更新 Excel 或预算后会同步给其他电脑。`:`${selectedCountry} 国家页：活动切换会同步改变指标、折线图日期范围和今日判断。当前共享数据源：${src}`;
+ document.getElementById('notice').textContent=selectedCountry==='ALL'?`共享数据源：${src}。`:`${selectedCountry} 国家页：活动切换会同步改变指标、折线图日期范围和今日判断。当前共享数据源：${src}`;
  document.querySelectorAll('#countrySeg button').forEach(b=>b.classList.toggle('on',b.dataset.country===selectedCountry));document.querySelectorAll('#curSeg button').forEach(b=>b.classList.toggle('on',b.dataset.cur===currency));
  if(selectedCountry==='ALL'){document.getElementById('overview').style.display='block';document.getElementById('countryPage').classList.remove('show');renderOverview()}
  else{document.getElementById('overview').style.display='none';document.getElementById('countryPage').classList.add('show');ensureActivity();renderCountryPage()}
