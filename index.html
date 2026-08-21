@@ -3,25 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>花费进度看板</title>
-<meta name="description" content="花费进度看板">
-<meta property="og:title" content="花费进度看板">
-<meta property="og:description" content="花费进度看板">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://spend-dashboard.pages.dev/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="花费进度看板">
-<meta name="twitter:description" content="花费进度看板">
-<link rel="stylesheet" href="./styles.css">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>花费进度看板 - 已停用</title>
+<style>
+html,body{height:100%;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f6f7f9;color:#1f2937}body{display:flex;align-items:center;justify-content:center}.box{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:32px 40px;box-shadow:0 10px 30px rgba(0,0,0,.05);text-align:center}.box h1{font-size:22px;margin:0 0 10px}.box p{font-size:14px;color:#6b7280;margin:0}
+</style>
 </head>
-<body>
-<div class="auth-gate" id="authGate"><div class="auth-card"><h2>花费进度看板</h2><div class="desc">使用已授权的邮箱和密码登录。</div><form id="loginForm"><div class="auth-field"><label>邮箱</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="name@company.com"></div><div class="auth-field"><label>密码</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="请输入密码"></div><button class="auth-submit" id="loginBtn" type="submit">登录</button><div class="auth-msg" id="authMsg"></div></form></div></div>
-<div class="wrap"><header><div><h1>AE / SA / MX 花费进度</h1><div class="sub" id="subtitle"></div></div><div class="controls"><div class="seg" id="countrySeg"><button data-country="ALL" class="on">ALL</button><button data-country="AE">AE</button><button data-country="SA">SA</button><button data-country="MX">MX</button></div><div class="seg" id="curSeg"><button data-cur="USD" class="on">USD</button><button data-cur="LOCAL">本币</button><button data-cur="RMB">RMB</button></div><button class="btn primary-btn" id="updateDataBtn">更新数据</button><input id="excelInput" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none"><button class="btn" id="editBtn">调整活动预算 / 汇率</button><div class="user-chip" id="userChip" style="display:none"><span class="sync-dot" id="syncDot"></span><b id="userEmail"></b><span id="userRole"></span><button id="logoutBtn">退出</button></div></div></header>
-<div class="notice" id="notice"></div><div class="readonly-banner" id="readonlyBanner">当前账号为只读权限，无法上传数据或修改预算。</div><div id="overview"><div class="overview-grid" id="overviewGrid"></div></div><div id="countryPage" class="country-page"><div class="hero-grid"><div id="countryDetail"></div><div class="panel"><div class="panel-head"><div><div class="panel-title">活动视角</div><div class="panel-sub">切换活动后，下方趋势图与今日判断同步切换</div></div><div class="activity-seg" id="activitySeg"></div></div><div id="activitySnapshot"></div></div></div><div class="chart-judge"><div class="panel"><div class="panel-head"><div><div class="panel-title" id="chartTitle">累计实际花费 vs 应花计划</div><div class="panel-sub" id="chartSub"></div></div><div class="legend"><span class="lg"><i class="line"></i>实际累计</span><span class="lg"><i class="line plan"></i>应花计划</span><span class="lg" id="forecastLegend"><i class="line forecast"></i>按近 3 日流速预测</span></div></div><div class="chart-wrap" id="chartWrap"></div></div><div class="panel"><div class="panel-head"><div><div class="panel-title">今日判断</div><div class="panel-sub">同时判断“目前是否超计划”和“照当前速度是否会超预算”</div></div></div><div class="judge" id="judge"></div></div></div><div class="section"><div class="panel-head"><div><div class="panel-title">活动明细</div><div class="panel-sub">新增时间进度、花费进度和期末预测；Pacing Gap 仍放在明细层</div></div><div class="drag-hint">↔ 拖动表头可调整列顺序</div></div><div class="table-scroll"><table><thead id="activityHead"></thead><tbody id="activityTable"></tbody></table></div><div class="foot">时间进度 = 活动已过天数 ÷ 活动总天数；花费进度 = 实际花费 ÷ 活动预算。蓝色实际线历史上超过灰色计划线，代表当日开始“超计划”；橙色虚线是按近 3 日日均外推的预测，可以在尚未超计划时提前暴露未来超预算风险。当前源表只有国家级日花费，同一国家多个活动重叠后，活动级实际花费暂按计划日流速比例分摊。</div></div></div></div>
-<div class="toast" id="toast"></div><div class="mask" id="mask"><div class="drawer"><div class="dh"><div><h2>活动预算与汇率设置</h2><div class="muted">修改活动预算、Carry Over、起止日期或汇率后，所有进度、预测与预警实时重算。</div></div><button class="icon" id="close">✕</button></div><div class="form"><div class="field"><label>USD → RMB</label><input id="rmb" type="number" step=".01"></div><div class="field"><label>税率</label><input id="tax" type="number" step=".001"></div><div class="field"><label>MX Q3 Budget USD</label><input id="q3b" type="number"></div><div class="field"><label>AE USD → AED</label><input id="aefx" type="number" step=".001"></div><div class="field"><label>SA USD → SAR</label><input id="safx" type="number" step=".001"></div><div class="field"><label>MX USD → MXN</label><input id="mxfx" type="number" step=".001"></div></div><div class="table-scroll"><table class="edit"><thead><tr><th>国家</th><th>活动</th><th>类型</th><th>开始</th><th>结束</th><th>基础预算 USD</th><th>Carry Over USD</th><th></th></tr></thead><tbody id="editRows"></tbody></table></div><div class="drawer-footer"><div><button class="btn" id="add">+ 新增活动</button> <button class="btn" id="reset">恢复原始设置</button></div><button class="btn" id="done">完成</button></div></div></div>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="./app1.js"></script>
-<script src="./app2.js"></script>
-<script src="./app3.js"></script>
-<script src="./app4.js"></script>
-</body></html>
+<body><div class="box"><h1>花费进度看板已停用</h1><p>当前仅保留本地离线版本使用。</p></div></body>
+</html>
